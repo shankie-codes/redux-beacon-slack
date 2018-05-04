@@ -1,54 +1,80 @@
-/* global __dirname, require, module*/
+/* global __dirname, require, module */
 
-const webpack = require("webpack");
-const path = require("path");
-const env = require("yargs").argv.env; // use --env with webpack 2
-const pkg = require("./package.json");
+const webpack = require('webpack');
+const path = require('path');
+const env = require('yargs').argv.env; // use --env with webpack 2
+const pkg = require('./package.json');
 
-let libraryName = pkg.name;
+const libraryName = pkg.name;
 
 let plugins = [],
   outputFile,
   mode;
 
-if (env === "dev") {
-  mode = "development";
-  outputFile = libraryName + ".min.js";
+plugins.push(new webpack.DefinePlugin({
+  'global.GENTLY': false,
+}));
+
+if (env === 'dev') {
+  mode = 'development';
+  outputFile = `${libraryName}.js`;
 } else {
-  mode = "production";
-  outputFile = libraryName + ".js";
+  mode = 'production';
+  outputFile = `${libraryName}.min.js`;
 }
 
 const config = {
-  entry: __dirname + "/src/index.js",
-  devtool: "source-map",
+  entry: `${__dirname}/src/redux-beacon-slack.js`,
+  devtool: 'source-map',
   mode,
+  target: 'node',
   output: {
-    path: __dirname + "/lib",
+    path: `${__dirname}/dist`,
+    globalObject: 'this',
     filename: outputFile,
     library: libraryName,
-    libraryTarget: "umd",
-    umdNamedDefine: true
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
   },
   module: {
     rules: [
       {
         test: /(\.jsx|\.js)$/,
-        loader: "babel-loader",
-        exclude: /(node_modules|bower_components)/
+        loader: 'babel-loader',
+        exclude: /(node_modules|bower_components)/,
       },
       {
         test: /(\.jsx|\.js)$/,
-        loader: "eslint-loader",
-        exclude: /node_modules/
-      }
-    ]
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+      },
+    ],
   },
   resolve: {
-    modules: [path.resolve("./node_modules"), path.resolve("./src")],
-    extensions: [".json", ".js"]
+    modules: [path.resolve('./node_modules'), path.resolve('./src')],
+    extensions: ['.json', '.js'],
   },
-  plugins: plugins
+  plugins,
 };
 
-module.exports = config;
+// A separate output for the server middleware
+const serverConfig = Object.assign(
+  {
+    target: 'node',
+  },
+  config
+);
+
+serverConfig.entry = `${__dirname}/src/express-middleware.js`;
+serverConfig.output = {
+  path: `${__dirname}/dist`,
+  filename: 'server.js',
+  globalObject: 'this',
+  library: libraryName,
+  libraryTarget: 'umd',
+  umdNamedDefine: true,
+};
+
+console.log(serverConfig);
+
+module.exports = [config, serverConfig];

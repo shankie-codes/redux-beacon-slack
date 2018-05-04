@@ -7,10 +7,13 @@
 		exports["redux-beacon-slack"] = factory();
 	else
 		root["redux-beacon-slack"] = factory();
-})(window, function() {
+})(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading wasm modules
+/******/ 	var installedWasmModules = {};
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -74,55 +77,15 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/ 	// object with all compiled WebAssembly.Modules
+/******/ 	__webpack_require__.w = {};
+/******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/redux-beacon-slack.js");
 /******/ })
 /************************************************************************/
 /******/ ({
-
-/***/ "./src/express-middleware.js":
-/*!***********************************!*\
-  !*** ./src/express-middleware.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/***/ }),
-
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.slack = exports.middleware = undefined;
-
-var _expressMiddleware = __webpack_require__(/*! ./express-middleware */ "./src/express-middleware.js");
-
-var _expressMiddleware2 = _interopRequireDefault(_expressMiddleware);
-
-var _reduxBeaconSlack = __webpack_require__(/*! ./redux-beacon-slack */ "./src/redux-beacon-slack.js");
-
-var _reduxBeaconSlack2 = _interopRequireDefault(_reduxBeaconSlack);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.middleware = _expressMiddleware2.default;
-exports.slack = _reduxBeaconSlack2.default;
-exports.default = _reduxBeaconSlack2.default;
-
-/***/ }),
 
 /***/ "./src/redux-beacon-slack.js":
 /*!***********************************!*\
@@ -137,15 +100,15 @@ exports.default = _reduxBeaconSlack2.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var bum = function bum() {
-  return 'bum';
+var reduxBeaconSlack = function reduxBeaconSlack(events) {
+  console.log(events);
 };
 
-exports.default = bum;
-module.exports = exports['default'];
+exports.default = reduxBeaconSlack;
+module.exports = exports["default"];
 
 /***/ })
 
 /******/ });
 });
-//# sourceMappingURL=redux-beacon-slack.min.js.map
+//# sourceMappingURL=redux-beacon-slack.js.map

@@ -1,3 +1,5 @@
-const bum = () => 'bum';
+const reduxBeaconSlack = (events) => {
+  console.log(events);
+};
 
-export default bum;
+export default reduxBeaconSlack;

@@ -18,7 +18,22 @@ To mitigate this risk, we've supplied a little Express middleware to proxy the r
 
 ## Usage - server
 
+Although you _can_ set up the client to post directly to your Slack incoming webhook URL, it's not recommended as it'll expose you webhook address to the world in your client-side bundle. To get around this, we've included a simple Express middleware that proxies your Slack URL. Although it's beyond the scope of this package, this means that you can put your endpoint behind some sort of authentication, allowing only authorised users to post analytics events.
 
+Setup is simple:
+
+```js
+import slackProxyMiddleware from "redux-beacon-slack/server";
+
+app.use(
+  "/api/v1/slack-webhook-proxy",
+  slackProxyMiddleware('https://hooks.slack.com/services/your/hook/path'),
+);
+```
+
+Then, reconfigure your client to send analytics events to your new endpoint, e.g. https://myapp.com/api/v1/slack-webhook-proxy
+
+The middleware is only for Express at the moment, though PRs for other servers (even if it's just docs) are most welcome.
 
 ##To-do
 
@@ -26,3 +41,8 @@ To mitigate this risk, we've supplied a little Express middleware to proxy the r
 * Better documentation
 * A way to expand the server middleware to offer other sercurity measures, e.g. rate limiting etc
 * Middleware for other servers
+
+## Thanks
+
+* Initial work on this package supported by [Arts Active Trust](http://artsactive.org.uk/) as part of the [A2:Connect](https://a2connect.org) project.
+* [Krasimir](http://krasimirtsonev.com/blog/article/javascript-library-starter-using-webpack-es6) for getting me started with a nice Webpack config for developing this project
