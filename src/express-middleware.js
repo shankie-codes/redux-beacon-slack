@@ -1,4 +1,3 @@
-// import SlackWebhook from 'slack-webhook';
 import request from 'superagent';
 
 export const slackExpressMiddleware = (slackEndpoint) => {

@@ -7,6 +7,8 @@ This is an early-stage work in progress, built for one specific project, but wit
 ##Motivation
 Redux Beacon listens to Redux actions and dispatches events to analytics platforms. Slack isn't an analytics platform, but our client wanted the same events that were going to Google Tag Manager to appear in Slack so that they could choose to take action on them. For instance, they wanted to know if a new person signed up for the app so that they could get in touch to find out more about what they needed. This could be accomplished in other ways, such as the excellent [Redux Saga](https://github.com/redux-saga/redux-saga), but we decided that it's quite nice to attach them onto the same action middleware.
 
+The current implmentation is quite naive and could do with improvement.
+
 ## Security/Spam
 If you were to include your Slack webhook address in your client-side bundle, it would be possible for a bot to scrap your webhook address and spam your organisation. Though it's not a major risk (as an incoming webhook doesn't allow access to the wider Slack API), it would still be good to avoid publishing this.
 
@@ -23,7 +25,7 @@ Although you _can_ set up the client to post directly to your Slack incoming web
 Setup is simple:
 
 ```js
-import slackProxyMiddleware from "redux-beacon-slack/server";
+import slackProxyMiddleware from "redux-beacon-slack/dist/server";
 
 app.use(
   "/api/v1/slack-webhook-proxy",
@@ -41,6 +43,7 @@ The middleware is only for Express at the moment, though PRs for other servers (
 * Better documentation
 * A way to expand the server middleware to offer other sercurity measures, e.g. rate limiting etc
 * Middleware for other servers
+* Integration with `redux-beacon` `logger`
 
 ## Thanks
 

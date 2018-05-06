@@ -11,7 +11,12 @@
     "type": "git",
     "url": "git+https://shankie-san@github.com/shankie-san/redux-beacon-slack.git"
   },
-  "keywords": ["redux", "redux-beacon", "slack", "analytics"],
+  "keywords": [
+    "redux",
+    "redux-beacon",
+    "slack",
+    "analytics"
+  ],
   "author": "Andrew Shankie <andrew@properdesign.co.uk> (https://properdesign.co.uk)",
   "license": "MIT",
   "bugs": {
@@ -31,11 +36,16 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
+    "raw-loader": "^0.5.1",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.1.2",
     "yargs": "^10.1.2"
   },
+  "peerDependencies": {
+    "redux-beacon": "2.x"
+  },
   "dependencies": {
+    "redux-beacon": "^2.0.3",
     "superagent": "^3.8.3"
   }
 }

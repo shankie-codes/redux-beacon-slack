@@ -39,20 +39,15 @@ const config = {
   module: {
     rules: [
       {
-        test: /(\.jsx|\.js)$/,
-        loader: 'babel-loader',
+        test: /(\.jsx|\.js|\.json)$/,
+        use: ['babel-loader', 'eslint-loader'],
         exclude: /(node_modules|bower_components)/,
-      },
-      {
-        test: /(\.jsx|\.js)$/,
-        loader: 'eslint-loader',
-        exclude: /node_modules/,
       },
     ],
   },
   resolve: {
     modules: [path.resolve('./node_modules'), path.resolve('./src')],
-    extensions: ['.json', '.js'],
+    extensions: ['.js', '.json'],
   },
   plugins,
 };
@@ -74,7 +69,5 @@ serverConfig.output = {
   libraryTarget: 'umd',
   umdNamedDefine: true,
 };
-
-console.log(serverConfig);
 
 module.exports = [config, serverConfig];

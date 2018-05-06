@@ -4715,7 +4715,7 @@ var compactQueue = function compactQueue(queue) {
     return obj;
 };
 
-var arrayToObject = function arrayToObject(source, options) {
+exports.arrayToObject = function arrayToObject(source, options) {
     var obj = options && options.plainObjects ? Object.create(null) : {};
     for (var i = 0; i < source.length; ++i) {
         if (typeof source[i] !== 'undefined') {
@@ -4726,7 +4726,7 @@ var arrayToObject = function arrayToObject(source, options) {
     return obj;
 };
 
-var merge = function merge(target, source, options) {
+exports.merge = function merge(target, source, options) {
     if (!source) {
         return target;
     }
@@ -4751,14 +4751,14 @@ var merge = function merge(target, source, options) {
 
     var mergeTarget = target;
     if (Array.isArray(target) && !Array.isArray(source)) {
-        mergeTarget = arrayToObject(target, options);
+        mergeTarget = exports.arrayToObject(target, options);
     }
 
     if (Array.isArray(target) && Array.isArray(source)) {
         source.forEach(function (item, i) {
             if (has.call(target, i)) {
                 if (target[i] && typeof target[i] === 'object') {
-                    target[i] = merge(target[i], item, options);
+                    target[i] = exports.merge(target[i], item, options);
                 } else {
                     target.push(item);
                 }
@@ -4773,7 +4773,7 @@ var merge = function merge(target, source, options) {
         var value = source[key];
 
         if (has.call(acc, key)) {
-            acc[key] = merge(acc[key], value, options);
+            acc[key] = exports.merge(acc[key], value, options);
         } else {
             acc[key] = value;
         }
@@ -4781,14 +4781,14 @@ var merge = function merge(target, source, options) {
     }, mergeTarget);
 };
 
-var assign = function assignSingleSource(target, source) {
+exports.assign = function assignSingleSource(target, source) {
     return Object.keys(source).reduce(function (acc, key) {
         acc[key] = source[key];
         return acc;
     }, target);
 };
 
-var decode = function (str) {
+exports.decode = function (str) {
     try {
         return decodeURIComponent(str.replace(/\+/g, ' '));
     } catch (e) {
@@ -4796,7 +4796,7 @@ var decode = function (str) {
     }
 };
 
-var encode = function encode(str) {
+exports.encode = function encode(str) {
     // This code was originally written by Brian White (mscdex) for the io.js core querystring library.
     // It has been adapted here for stricter adherence to RFC 3986
     if (str.length === 0) {
@@ -4848,7 +4848,7 @@ var encode = function encode(str) {
     return out;
 };
 
-var compact = function compact(value) {
+exports.compact = function compact(value) {
     var queue = [{ obj: { o: value }, prop: 'o' }];
     var refs = [];
 
@@ -4870,27 +4870,16 @@ var compact = function compact(value) {
     return compactQueue(queue);
 };
 
-var isRegExp = function isRegExp(obj) {
+exports.isRegExp = function isRegExp(obj) {
     return Object.prototype.toString.call(obj) === '[object RegExp]';
 };
 
-var isBuffer = function isBuffer(obj) {
+exports.isBuffer = function isBuffer(obj) {
     if (obj === null || typeof obj === 'undefined') {
         return false;
     }
 
     return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
-};
-
-module.exports = {
-    arrayToObject: arrayToObject,
-    assign: assign,
-    compact: compact,
-    decode: decode,
-    encode: encode,
-    isBuffer: isBuffer,
-    isRegExp: isRegExp,
-    merge: merge
 };
 
 
@@ -7485,10 +7474,10 @@ exports.cleanHeader = function(header, changesOrigin){
 /*!**********************************************!*\
   !*** ./node_modules/superagent/package.json ***!
   \**********************************************/
-/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, browser, bugs, bundleDependencies, component, contributors, dependencies, deprecated, description, devDependencies, engines, homepage, keywords, license, main, name, repository, scripts, version, default */
+/*! exports provided: name, version, description, scripts, keywords, license, author, contributors, repository, dependencies, devDependencies, browser, component, main, engines, default */
 /***/ (function(module) {
 
-module.exports = {"_from":"superagent@^3.8.3","_id":"superagent@3.8.3","_inBundle":false,"_integrity":"sha512-GLQtLMCoEIK4eDv6OGtkOoSMt3D+oq0y3dsxMuYuDvaNUvuT8eFBuLmfR0iYYzHC1e8hpzC6ZsxbuP6DIalMFA==","_location":"/superagent","_phantomChildren":{"ms":"2.0.0"},"_requested":{"type":"range","registry":true,"raw":"superagent@^3.8.3","name":"superagent","escapedName":"superagent","rawSpec":"^3.8.3","saveSpec":null,"fetchSpec":"^3.8.3"},"_requiredBy":["/"],"_resolved":"https://registry.npmjs.org/superagent/-/superagent-3.8.3.tgz","_shasum":"460ea0dbdb7d5b11bc4f78deba565f86a178e128","_spec":"superagent@^3.8.3","_where":"/Users/shankie/Sites/redux-beacon-slack","author":{"name":"TJ Holowaychuk","email":"tj@vision-media.ca"},"browser":{"./lib/node/index.js":"./lib/client.js","./test/support/server.js":"./test/support/blank.js"},"bugs":{"url":"https://github.com/visionmedia/superagent/issues"},"bundleDependencies":false,"component":{"scripts":{"superagent":"lib/client.js"}},"contributors":[{"name":"Kornel Lesiński","email":"kornel@geekhood.net"},{"name":"Peter Lyons","email":"pete@peterlyons.com"},{"name":"Hunter Loftis","email":"hunter@hunterloftis.com"}],"dependencies":{"component-emitter":"^1.2.0","cookiejar":"^2.1.0","debug":"^3.1.0","extend":"^3.0.0","form-data":"^2.3.1","formidable":"^1.2.0","methods":"^1.1.1","mime":"^1.4.1","qs":"^6.5.1","readable-stream":"^2.3.5"},"deprecated":false,"description":"elegant & feature rich browser / node HTTP with a fluent API","devDependencies":{"Base64":"^1.0.1","basic-auth-connect":"^1.0.0","body-parser":"^1.18.2","browserify":"^14.1.0","cookie-parser":"^1.4.3","express":"^4.16.3","express-session":"^1.15.6","marked":"0.3.12","mocha":"^3.5.3","multer":"^1.3.0","should":"^11.2.0","should-http":"^0.1.1","zuul":"^3.11.1"},"engines":{"node":">= 4.0"},"homepage":"https://github.com/visionmedia/superagent#readme","keywords":["http","ajax","request","agent"],"license":"MIT","main":"./lib/node/index.js","name":"superagent","repository":{"type":"git","url":"git://github.com/visionmedia/superagent.git"},"scripts":{"prepare":"make all","test":"make test"},"version":"3.8.3"};
+module.exports = {"name":"superagent","version":"3.8.3","description":"elegant & feature rich browser / node HTTP with a fluent API","scripts":{"prepare":"make all","test":"make test"},"keywords":["http","ajax","request","agent"],"license":"MIT","author":"TJ Holowaychuk <tj@vision-media.ca>","contributors":["Kornel Lesiński <kornel@geekhood.net>","Peter Lyons <pete@peterlyons.com>","Hunter Loftis <hunter@hunterloftis.com>"],"repository":{"type":"git","url":"git://github.com/visionmedia/superagent.git"},"dependencies":{"component-emitter":"^1.2.0","cookiejar":"^2.1.0","debug":"^3.1.0","extend":"^3.0.0","form-data":"^2.3.1","formidable":"^1.2.0","methods":"^1.1.1","mime":"^1.4.1","qs":"^6.5.1","readable-stream":"^2.3.5"},"devDependencies":{"Base64":"^1.0.1","basic-auth-connect":"^1.0.0","body-parser":"^1.18.2","browserify":"^14.1.0","cookie-parser":"^1.4.3","express":"^4.16.3","express-session":"^1.15.6","marked":"0.3.12","mocha":"^3.5.3","multer":"^1.3.0","should":"^11.2.0","should-http":"^0.1.1","zuul":"^3.11.1"},"browser":{"./lib/node/index.js":"./lib/client.js","./test/support/server.js":"./test/support/blank.js"},"component":{"scripts":{"superagent":"lib/client.js"}},"main":"./lib/node/index.js","engines":{"node":">= 4.0"}};
 
 /***/ }),
 
@@ -7528,7 +7517,8 @@ var slackExpressMiddleware = exports.slackExpressMiddleware = function slackExpr
       next('redux-beacon-slack: Accepts POST with req.query.text');
     }
   };
-}; // import SlackWebhook from 'slack-webhook';
+};
+
 exports.default = slackExpressMiddleware;
 
 /***/ }),
