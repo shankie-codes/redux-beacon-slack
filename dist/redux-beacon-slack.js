@@ -7501,54 +7501,23 @@ var _superagent2 = _interopRequireDefault(_superagent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var reduxBeaconSlack = function reduxBeaconSlack(events) {
-  // console.log(events);
+var reduxBeaconSlack = function reduxBeaconSlack(options) {
+  return function (events) {
+    events.forEach(function (_ref) {
+      var slackPayload = _ref.slackPayload;
 
-  // request
-  //   .post('api/v1/slack-webhook-proxy')
-  //   .send({ text: 'bumthis' })
-  //   .set('accept', 'json')
-  //   // eslint-disable-next-line
-  //   .end((err, response) => {
-  //     // Calling the end function will send the request
-  //     if (err) {
-  //       return new Error('Posting to Slack failed');
-  //     }
-  //   });
-  // events.map(({ slackWebhookURL, slackPayload }) => {
-  //   if (slackWebhookURL && slackPayload && slackPayload.text) {
-  //     request
-  //       .post(slackWebhookURL)
-  //       .send(slackPayload)
-  //       .set('accept', 'json')
-  //       // eslint-disable-next-line
-  //       .end((err, response) => {
-  //         // Calling the end function will send the request
-  //         if (err) {
-  //           return new Error('Posting to Slack failed');
-  //         }
-  //       });
-  //     return true;
-  //   }
-  //   return false;
-  // });
-  events.forEach(function (_ref) {
-    var slackWebhookURL = _ref.slackWebhookURL,
-        slackPayload = _ref.slackPayload;
-
-    // events.forEach((event) => {
-    // console.log(event);
-    if (slackWebhookURL && slackPayload && slackPayload.text) {
-      _superagent2.default.post(slackWebhookURL).send(slackPayload).set('accept', 'json')
-      // eslint-disable-next-line
-      .end(function (err, response) {
-        // Calling the end function will send the request
-        if (err) {
-          return new Error('Posting to Slack failed');
-        }
-      });
-    }
-  });
+      if (options.webhookURL && slackPayload && slackPayload.text) {
+        _superagent2.default.post(options.webhookURL).send(slackPayload).set('accept', 'json').set(options.headers)
+        // eslint-disable-next-line
+        .end(function (err, response) {
+          // Calling the end function will send the request
+          if (err) {
+            return new Error('Posting to Slack failed');
+          }
+        });
+      }
+    });
+  };
 };
 
 exports.default = reduxBeaconSlack;

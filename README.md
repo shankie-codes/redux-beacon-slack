@@ -16,7 +16,32 @@ To mitigate this risk, we've supplied a little Express middleware to proxy the r
 
 ## Usage - client
 
+In `configureStore.js` or similar:
 
+```js
+import slack from "redux-beacon-slack";
+
+// Define Beacon events to send to analytics platforms
+const somethingImportant = action => ({
+  slackPayload: { text: "Something important" }, // You can add any valid Slack webhook fields, as documented here: https://api.slack.com/custom-integrations/incoming-webhooks
+});
+
+// Map the events to Redux actions
+export const eventsMap = {
+  "AN_IMPORTANT_ACTION": somethingImportant,
+};
+
+const slackBeaconMiddleware = createMiddleware(
+  eventsMap,
+  slack({
+    webhookURL: "/api/v1/slack-webhook-proxy", // Either your full hooks.slack.com URL, or the server-side proxy that you've set up
+    headers: {
+      Authorization: `Bearer ${idToken}`, // Not needed if you're posting directly to Slack
+    },
+  }),
+);
+
+```
 
 ## Usage - server
 

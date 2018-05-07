@@ -3,20 +3,17 @@
   "version": "0.1.0",
   "description": "Slack Incoming Webhook target for Redux Beacon",
   "main": "dist/redux-beacon-slack.js",
+  "unpkg": "dist/redux-beacon-slack.min.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build",
-    "start": "webpack --progress --colors --watch --env dev"
+    "start": "webpack --progress --colors --watch --env dev",
+    "prepublishOnly": "rm -rf dist/* && npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://shankie-san@github.com/shankie-san/redux-beacon-slack.git"
   },
-  "keywords": [
-    "redux",
-    "redux-beacon",
-    "slack",
-    "analytics"
-  ],
+  "keywords": ["redux", "redux-beacon", "slack", "analytics"],
   "author": "Andrew Shankie <andrew@properdesign.co.uk> (https://properdesign.co.uk)",
   "license": "MIT",
   "bugs": {
