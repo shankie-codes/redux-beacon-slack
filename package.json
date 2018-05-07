@@ -1,6 +1,6 @@
 {
   "name": "redux-beacon-slack",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Slack Incoming Webhook target for Redux Beacon",
   "main": "dist/redux-beacon-slack.js",
   "unpkg": "dist/redux-beacon-slack.min.js",
